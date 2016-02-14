@@ -10,12 +10,13 @@ import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Interface
 {
     JFrame frame;
     JPanel panel;
-    JLabel label;
+    JTextField label;
     
     public Interface(Board theBoard)
     {
@@ -32,7 +33,8 @@ public class Interface
         panel = new JPanel();
           panel.setVisible(true);
           panel.setPreferredSize(new Dimension(100, 100));
-        label = new JLabel("--------");
+        label = new JTextField("--------");
+        label.setSize(100, 100);
         for(int i = 0; i < 10; i++)
         {
             JButton b = new JButton(String.valueOf(i));
@@ -60,22 +62,8 @@ public class Interface
             {
                 System.out.println("Java: "+ioe);
             }
-            String s = Jarduina.comm.sr.str;
-            label.setText(s);
-
-//            Object o = ae.getSource();
-//            if(o == button)
-//            {
-//                System.out.println("Java: Button Pressed");
-//                try
-//                {
-//                    Jarduina.comm.out.write(49);
-//                }
-//                catch(IOException ioe)
-//                {
-//                    System.out.println("Java: "+ioe);
-//                }
-//            }
+            
+            label.replaceSelection(Jarduina.comm.sr.str);
         }
     }
     

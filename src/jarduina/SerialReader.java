@@ -30,7 +30,7 @@ import java.io.InputStream;
             catch ( IOException e )
             {
                 e.printStackTrace();
-            }            
+            }
         }
         
         public String getString()

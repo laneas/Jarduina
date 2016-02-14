@@ -37,7 +37,8 @@ public class Jarduina
         if(connected)
         {
             Board b = new Board("Test Board", port);
-            b.addComponent(new Ultrasonic(1));
+            b.addComponent(new Ultrasonic(3));
+            b.addComponent(new LED(6));
             
             Interface i = new Interface(b);
         }
