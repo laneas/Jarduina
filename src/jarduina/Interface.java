@@ -92,7 +92,7 @@ public class Interface
                     System.out.println("Java: "+ioe);
                 }
             
-                label.setText(Jarduina.comm.sr.str.substring(Jarduina.comm.sr.str.length() - 6));
+                label.setText(Jarduina.comm.sr.str.substring(Jarduina.comm.sr.str.length() - 7));
             }
         }
     }

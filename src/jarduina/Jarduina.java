@@ -26,8 +26,6 @@ public class Jarduina
         }
         catch ( Exception e )
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
             System.out.println(e);
             connected = false;
             JOptionPane.showMessageDialog(new JFrame(), "Could not connect to: "+port, "Error", JOptionPane.ERROR_MESSAGE);
