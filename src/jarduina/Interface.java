@@ -5,12 +5,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -37,9 +34,10 @@ public class Interface
         panel = new JPanel();
           panel.setVisible(true);
           panel.setPreferredSize(new Dimension(100, 100));
-        label = new JTextField("--------");
-        label.setSize(100, 100);
+        label = new JTextField("");
+        label.setPreferredSize(new Dimension(100, 25));
         angleWrite = new JTextField("90");
+        angleWrite.setPreferredSize(new Dimension(50, 25));
         angleButton  = new JButton("Angle Write");
           angleButton.addActionListener(new ButtonListener());
         for(int i = 0; i < 10; i++)
@@ -94,7 +92,7 @@ public class Interface
                     System.out.println("Java: "+ioe);
                 }
             
-                label.setText(Jarduina.comm.sr.str.substring(Jarduina.comm.sr.str.length() - 5));
+                label.setText(Jarduina.comm.sr.str.substring(Jarduina.comm.sr.str.length() - 6));
             }
         }
     }
