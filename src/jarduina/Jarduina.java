@@ -39,7 +39,7 @@ public class Jarduina
             Board b = new Board("Test Board", port);
             b.addComponent(new Ultrasonic(3));
             b.addComponent(new LED(6));
-            
+            b.addComponent(new ContinuousServo(7));
             Interface i = new Interface(b);
         }
     }

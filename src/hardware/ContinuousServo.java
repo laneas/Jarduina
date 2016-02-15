@@ -16,8 +16,8 @@ public class ContinuousServo extends Servo implements Incrementable
     {
         super(thePin);
         upperLimit = 180;
-        lowerLimit = -180;
-        defaultAngle = 0;
+        lowerLimit = 0;
+        defaultAngle = 90;
     }
     
 }

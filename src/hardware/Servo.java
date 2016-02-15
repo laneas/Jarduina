@@ -11,9 +11,9 @@ package hardware;
  */
 public class Servo extends Component implements Incrementable
 {
-    private double angle;
-    private double defaultAngle;
-    private double upperLimit, lowerLimit;
+    protected double angle;
+    protected double defaultAngle;
+    protected double upperLimit, lowerLimit;
     
     public Servo(int thePin)
     {
