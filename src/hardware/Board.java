@@ -20,15 +20,15 @@ public class Board
     
     public Board(String name, String com)
     {
-        setBoardType();
         setName(name);
         port = com;
         components = new ArrayList<Component>();
     }
     
-    public void setBoardType()
+    public void setBoardType(String theType)
     {
-        boardType = "Arduino Uno"; //default
+        boardType = theType;
+        //boardType = "Arduino Uno"; //default
         //later include logic for setting name based on user selection
     }
     

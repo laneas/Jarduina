@@ -1,6 +1,7 @@
-package jarduina;
+package GUI;
 
 import hardware.Board;
+import jarduina.Jarduina;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,7 +64,7 @@ public class Interface
             
             if(o == angleButton)
             {
-                try
+               /* try
                 {
                     String angle = angleWrite.getText();
                     for(int i = 0; i < angle.length(); i++)
@@ -71,28 +72,28 @@ public class Interface
                         char index = angle.charAt(i);
                         int value = Character.getNumericValue(index);
                         value = value + 48;
-                        Jarduina.comm.out.write(value);
+                        //Jarduina.comm.out.write(value);
                     }
                 }
                 catch(IOException ioe)
                 {
                     System.out.println("Java: "+ioe);
-                } 
+                }*/ 
             }
             else
             {
                 int buttonNum = Integer.parseInt(temp.getText());
                 buttonNum = buttonNum + 48;
-                try
+               /* try
                 {
-                    Jarduina.comm.out.write((buttonNum));
+                    //Jarduina.comm.out.write((buttonNum));
                 }
                 catch(IOException ioe)
                 {
                     System.out.println("Java: "+ioe);
-                }
+                }*/
             
-                label.setText(Jarduina.comm.sr.str.substring(Jarduina.comm.sr.str.length() - 7));
+                //label.setText(Jarduina.comm.sr.str.substring(Jarduina.comm.sr.str.length() - 7));
             }
         }
     }

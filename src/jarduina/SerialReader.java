@@ -7,7 +7,7 @@ import java.io.InputStream;
     public class SerialReader implements Runnable 
     {
         InputStream in;
-        String str;
+        public String str;
         
         public SerialReader ( InputStream in )
         {

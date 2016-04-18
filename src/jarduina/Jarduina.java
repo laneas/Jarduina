@@ -5,6 +5,8 @@
  */
 package jarduina;
 
+import GUI.Application;
+import GUI.Interface;
 import hardware.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,7 +18,7 @@ public class Jarduina
     
     public static void main(String[] args)
     {
-        String port = JOptionPane.showInputDialog("Enter Port Name: ");
+        /*String port = JOptionPane.showInputDialog("Enter Port Name: ");
         try
         {
             comm = new SerialComm();
@@ -39,7 +41,9 @@ public class Jarduina
             b.addComponent(new LED(6));
             b.addComponent(new ContinuousServo(7));
             Interface i = new Interface(b);
-        }
+        }*/
+        
+        Application app = new Application();
     }
     
 }

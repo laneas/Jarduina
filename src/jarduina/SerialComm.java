@@ -9,16 +9,16 @@ import java.io.OutputStream;
 
 public class SerialComm
 {
-    InputStream in;
-    OutputStream out;
-    SerialReader sr;
+    public InputStream in;
+    public OutputStream out;
+    public SerialReader sr;
     
     public SerialComm()
     {
         super();
     }
     
-    void connect ( String portName ) throws Exception
+    public void connect ( String portName ) throws Exception
     {
         CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
         if ( portIdentifier.isCurrentlyOwned() )
