@@ -1,0 +1,40 @@
+#include <Servo.h>
+
+int input = 0;
+Servo servo1;
+const int red = 8;
+
+void setup() 
+{
+  Serial.begin(9600);
+  pinMode(red, OUTPUT);
+  servo1.attach(9);
+  servo1.write(0);
+
+  Serial.println("Arduino: Ready");
+}
+
+void loop() 
+{
+  
+}
+
+void serialEvent()
+{
+  while(Serial.available())
+  {
+    Serial.println(input);
+    if(input == 0)
+    {
+        digitalWrite(red, LOW);
+    }  
+    else if(input == 1)
+    {
+      digitalWrite(red, HIGH);  
+    }
+    else
+    {
+      servo1.write(input);  
+    }
+  }  
+}

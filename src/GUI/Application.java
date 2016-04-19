@@ -1,16 +1,17 @@
 package GUI;
 
+import Outputs.BoardDeserializer;
+import Outputs.BoardSerializer;
 import Outputs.CodeWriter;
 import hardware.*;
 import jarduina.*;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,7 +34,7 @@ public class Application
       private JComboBox pinInput;
       private JTextField componentNameInput;
     private JPanel boardInterface;
-    
+        
     private Board userBoard;
     private SerialComm comm;
     
@@ -41,6 +42,10 @@ public class Application
     private static final int BUTTONHEIGHT = 25;
     private static final int TEXTWIDTH = 175;
     private static final int TEXTHEIGHT = 25;
+    
+    private static final Color arduinoBlue = new Color(0, 151, 156);
+    private static final Color arduinoRed = new Color(156, 0, 0);
+    private static final Color arduinoBrown = new Color(156, 78, 0);
     
     public Application()
     {
@@ -73,13 +78,14 @@ public class Application
           tabs.addTab("Board Interface", null, boardInterface, "Your Interface");
         
         window.add(tabs);
-        //window.pack();
+          window.pack();
     }
     
     public void boardSetupSetup()
     {
         String[] boardTypeList = {"Uno", "Nano", "Mega", "Nano", "Leonardo", "Yun", "Mini", "Duemilanove", "Other"};
         boardSetup = new JPanel();
+          boardSetup.setBackground(arduinoBlue);
         
         boardNameInput = new JTextField("Enter Board Name Here");
           boardNameInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
@@ -99,8 +105,6 @@ public class Application
     
     public void boardEditSetup()
     {
-        GridLayout gl = new GridLayout(2, 2);
-        
         int widthScale = 150;
         int heightScale = 150;
         Toolkit t = Toolkit.getDefaultToolkit();
@@ -115,28 +119,30 @@ public class Application
         String[] pins = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"};
         
         boardEdit = new JPanel();
-          //boardEdit.setLayout(gl);
+          boardEdit.setBackground(arduinoBlue);
         JPanel dash = new JPanel();
+          dash.setBackground(arduinoBlue);
         
         addConServo = new JButton("Continuous Servo", conServo);
           addConServo.addActionListener(new editListener());
-          //addConServo.setPreferredSize(new Dimension(widthScale, heightScale));
         addLed = new JButton("LED", led);
           addLed.addActionListener(new editListener());
-          //addLed.setPreferredSize(new Dimension(widthScale, heightScale));
         addServo = new JButton("Servo", servo);
           addServo.addActionListener(new editListener());
-          //addServo.setPreferredSize(new Dimension(widthScale, heightScale));
         addUltrasonic = new JButton("Ultrasonic Sensor", ultrasonic);
           addUltrasonic.addActionListener(new editListener());
-          //addUltrasonic.setPreferredSize(new Dimension(widthScale, heightScale));
           
         pinInput = new JComboBox(pins);
           pinInput.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
         JLabel enterName = new JLabel("Enter Compontent Name:");
         componentNameInput = new JTextField("default");
           componentNameInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
-        
+        JButton save = new JButton("Save");
+          save.addActionListener(new serialListener());
+          save.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
+        JButton load = new JButton("Load");
+          load.addActionListener(new serialListener());
+          load.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
         boardEdit.add(addConServo);
         boardEdit.add(addLed);
         boardEdit.add(addServo);
@@ -144,6 +150,8 @@ public class Application
         dash.add(pinInput);
         dash.add(enterName);
         dash.add(componentNameInput);
+        dash.add(save);
+        dash.add(load);
         boardEdit.add(dash);
     }
     
@@ -152,6 +160,7 @@ public class Application
         GridLayout gl = new GridLayout(3, 2);
         boardInterface = new JPanel();
           boardInterface.setLayout(gl);
+          boardInterface.setBackground(arduinoBlue);
         JButton connectButton = new JButton("Connect");
           connectButton.addActionListener(new connectListener());
           connectButton.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
@@ -161,6 +170,25 @@ public class Application
           
         boardInterface.add(connectButton);
         boardInterface.add(createInterfaceButton);
+    }
+        
+    private class serialListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent ae)
+        {
+            Object o = ae.getSource();
+            JButton b = (JButton)o;
+            
+            if(b.getText().equals("Save"))
+            {
+                BoardSerializer bs = new BoardSerializer(userBoard);
+            }
+            else if(b.getText().equals("Load"))
+            {
+                BoardDeserializer bd = new BoardDeserializer("C:\\Users\\Ardjen\\Desktop\\"+userBoard.getName()+".ser");
+            }
+        }
     }
     
     private class boardSubmitListener implements ActionListener

@@ -41,8 +41,9 @@ public class Widget extends JPanel
         {
             makeUltrasonicScreen();
         }
-        Border blackline = BorderFactory.createLineBorder(Color.black);
+        Border blackline = BorderFactory.createLineBorder(new Color(156, 78, 0));
         this.setBorder(blackline);
+        this.setBackground(new Color(0, 151, 156));
     }
     
     public void makeContinuousServoScreen()
