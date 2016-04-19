@@ -6,10 +6,12 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 public class Widget extends JPanel
 {
@@ -23,6 +25,24 @@ public class Widget extends JPanel
     {
         comm = theComm;
         component = theComponent;
+        if(theComponent instanceof LED)
+        {
+            makeLEDScreen();
+        }
+        else if(theComponent instanceof ContinuousServo)
+        {
+            makeContinuousServoScreen();
+        }
+        else if(theComponent instanceof Servo)
+        {
+            makeServoScreen();
+        }
+        else if(theComponent instanceof Ultrasonic)
+        {
+            makeUltrasonicScreen();
+        }
+        Border blackline = BorderFactory.createLineBorder(Color.black);
+        this.setBorder(blackline);
     }
     
     public void makeContinuousServoScreen()

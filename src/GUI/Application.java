@@ -1,11 +1,16 @@
 package GUI;
 
+import Outputs.CodeWriter;
 import hardware.*;
 import jarduina.*;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,6 +36,11 @@ public class Application
     
     private Board userBoard;
     private SerialComm comm;
+    
+    private static final int BUTTONWIDTH = 100;
+    private static final int BUTTONHEIGHT = 25;
+    private static final int TEXTWIDTH = 175;
+    private static final int TEXTHEIGHT = 25;
     
     public Application()
     {
@@ -63,6 +73,7 @@ public class Application
           tabs.addTab("Board Interface", null, boardInterface, "Your Interface");
         
         window.add(tabs);
+        //window.pack();
     }
     
     public void boardSetupSetup()
@@ -71,10 +82,14 @@ public class Application
         boardSetup = new JPanel();
         
         boardNameInput = new JTextField("Enter Board Name Here");
+          boardNameInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
         portInput = new JTextField("Enter Port Here");
+          portInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
         boardTypeInput = new JComboBox(boardTypeList);
+          boardTypeInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
         boardSubmit = new JButton("Submit");
           boardSubmit.addActionListener(new boardSubmitListener());
+          boardSubmit.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
         
         boardSetup.add(boardNameInput);
         boardSetup.add(portInput);
@@ -84,6 +99,8 @@ public class Application
     
     public void boardEditSetup()
     {
+        GridLayout gl = new GridLayout(2, 2);
+        
         int widthScale = 150;
         int heightScale = 150;
         Toolkit t = Toolkit.getDefaultToolkit();
@@ -98,36 +115,52 @@ public class Application
         String[] pins = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"};
         
         boardEdit = new JPanel();
+          //boardEdit.setLayout(gl);
+        JPanel dash = new JPanel();
         
         addConServo = new JButton("Continuous Servo", conServo);
           addConServo.addActionListener(new editListener());
+          //addConServo.setPreferredSize(new Dimension(widthScale, heightScale));
         addLed = new JButton("LED", led);
           addLed.addActionListener(new editListener());
+          //addLed.setPreferredSize(new Dimension(widthScale, heightScale));
         addServo = new JButton("Servo", servo);
           addServo.addActionListener(new editListener());
+          //addServo.setPreferredSize(new Dimension(widthScale, heightScale));
         addUltrasonic = new JButton("Ultrasonic Sensor", ultrasonic);
           addUltrasonic.addActionListener(new editListener());
+          //addUltrasonic.setPreferredSize(new Dimension(widthScale, heightScale));
           
         pinInput = new JComboBox(pins);
+          pinInput.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
         JLabel enterName = new JLabel("Enter Compontent Name:");
         componentNameInput = new JTextField("default");
+          componentNameInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
         
         boardEdit.add(addConServo);
         boardEdit.add(addLed);
         boardEdit.add(addServo);
         boardEdit.add(addUltrasonic);
-        boardEdit.add(pinInput);
-        boardEdit.add(enterName);
-        boardEdit.add(componentNameInput);
+        dash.add(pinInput);
+        dash.add(enterName);
+        dash.add(componentNameInput);
+        boardEdit.add(dash);
     }
     
     public void boardInterfaceSetup()
     {
+        GridLayout gl = new GridLayout(3, 2);
         boardInterface = new JPanel();
+          boardInterface.setLayout(gl);
         JButton connectButton = new JButton("Connect");
           connectButton.addActionListener(new connectListener());
+          connectButton.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
+        JButton createInterfaceButton = new JButton("Create Interface");
+          createInterfaceButton.addActionListener(new connectListener());
+          createInterfaceButton.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
           
         boardInterface.add(connectButton);
+        boardInterface.add(createInterfaceButton);
     }
     
     private class boardSubmitListener implements ActionListener
@@ -174,6 +207,15 @@ public class Application
                         System.out.println(ex.getMessage());
                     }
                 }
+                if(b.getText().equals("Create Interface"))
+                {
+                    for(int i = 0; i < userBoard.getComponents().size(); i++)
+                    {
+                        Widget w = new Widget(userBoard.getComponents().get(i), comm);
+                        boardInterface.add(w);
+                    }
+                    CodeWriter cw = new CodeWriter(userBoard);
+                }
             }
         }
     }
@@ -184,7 +226,7 @@ public class Application
         public void actionPerformed(ActionEvent ae)
         {
             Object o = ae.getSource();
-            int thePin = Integer.parseInt(String.valueOf(boardTypeInput.getSelectedItem()));
+            int thePin = Integer.parseInt(String.valueOf(pinInput.getSelectedItem()));
             String theName = componentNameInput.getText();
             
             if(userBoard != null)
