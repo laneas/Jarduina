@@ -6,6 +6,7 @@ import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Enumeration;
 
 public class SerialComm
 {
@@ -47,5 +48,20 @@ public class SerialComm
                 System.out.println("Error: Only serial ports are handled by this example.");
             }
         }     
+    }
+    
+    public void listPorts()
+    {
+        System.out.println("Ports:");
+        Enumeration list = CommPortIdentifier.getPortIdentifiers();
+        
+        while(list.hasMoreElements())
+        {
+            CommPortIdentifier cpi = (CommPortIdentifier)list.nextElement();
+            System.out.print("Port"+cpi.getName()+" ");
+            if(cpi.getPortType() == CommPortIdentifier.PORT_SERIAL){System.out.println(" is a Serial Port - "+cpi);}
+            else if(cpi.getPortType() == CommPortIdentifier.PORT_PARALLEL){System.out.println(" is a Parallel Port - "+cpi);}
+            else{System.out.println("is an Unknown Port - "+cpi);}
+        }
     }
 }
