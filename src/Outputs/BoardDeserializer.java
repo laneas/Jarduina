@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Outputs;
 
 import hardware.Board;
@@ -11,11 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-
-/**
- *
- * @author Ardjen
- */
 public class BoardDeserializer extends Thread
 {
     protected Board board;
