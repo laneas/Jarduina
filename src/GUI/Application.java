@@ -11,7 +11,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,6 +28,7 @@ public class Application
       private JTextField boardNameInput, portInput;
       private JComboBox boardTypeInput;
       private JButton boardSubmit;
+      private JLabel boardIcon;
     private JPanel boardEdit;
       private JButton addConServo, addLed, addServo, addUltrasonic;
       private JComboBox pinInput;
@@ -78,14 +78,18 @@ public class Application
           tabs.addTab("Board Interface", null, boardInterface, "Your Interface");
         
         window.add(tabs);
-          window.pack();
     }
     
     public void boardSetupSetup()
     {
-        String[] boardTypeList = {"Uno", "Nano", "Mega", "Nano", "Leonardo", "Yun", "Mini", "Duemilanove", "Other"};
+        String[] boardTypeList = {"Uno", "Nano", "Mega", "Leonardo", "Yun", "Mini", "Duemilanove", "Other"};
         boardSetup = new JPanel();
           boardSetup.setBackground(arduinoBlue);
+          
+          
+        ImageIcon board = new ImageIcon("src//res//boards//uno.jpg");
+        boardIcon = new JLabel();
+        boardIcon.setIcon(board);
         
         boardNameInput = new JTextField("Enter Board Name Here");
           boardNameInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
@@ -93,14 +97,15 @@ public class Application
           portInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
         boardTypeInput = new JComboBox(boardTypeList);
           boardTypeInput.setPreferredSize(new Dimension(TEXTWIDTH, TEXTHEIGHT));
+          boardTypeInput.addActionListener(new typeListener());
         boardSubmit = new JButton("Submit");
           boardSubmit.addActionListener(new boardSubmitListener());
           boardSubmit.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
-        
         boardSetup.add(boardNameInput);
         boardSetup.add(portInput);
         boardSetup.add(boardTypeInput);
         boardSetup.add(boardSubmit);
+        boardSetup.add(boardIcon);
     }
     
     public void boardEditSetup()
@@ -170,6 +175,59 @@ public class Application
           
         boardInterface.add(connectButton);
         boardInterface.add(createInterfaceButton);
+    }
+    
+    private class typeListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent ce)
+        {
+           if(ce.getSource() == boardTypeInput)
+           {
+           String type = String.valueOf(boardTypeInput.getSelectedItem());
+           if(type.equals("Uno"))
+           {
+               ImageIcon board = new ImageIcon("src//res//boards//uno.jpg");
+               boardIcon.setIcon(board);
+           }
+           else if(type.equals("Nano"))
+           {
+            ImageIcon board = new ImageIcon("src//res//boards//nano.jpg");
+            boardIcon.setIcon(board);
+           }
+           else if(type.equals("Mega"))
+           {
+            ImageIcon board = new ImageIcon("src//res//boards//mega.jpg");
+            boardIcon.setIcon(board);
+           }
+           else if(type.equals("Leonardo"))
+           {
+            ImageIcon board = new ImageIcon("src//res//boards//leonardo.jpg");
+            boardIcon.setIcon(board);
+           }
+           else if(type.equals("Yun"))
+           {
+            ImageIcon board = new ImageIcon("src//res//boards//yun.jpg");
+            boardIcon.setIcon(board);
+           }
+           else if(type.equals("Mini"))
+           {
+            ImageIcon board = new ImageIcon("src//res//boards//mini.jpg");
+            boardIcon.setIcon(board);
+           }
+           else if(type.equals("Duemilanove"))
+           {
+            ImageIcon board = new ImageIcon("src//res//boards//due.jpg");
+            boardIcon.setIcon(board);
+           }
+           else
+           {
+            ImageIcon board = new ImageIcon("src//res//boards//lillypad.jpg");
+            boardIcon.setIcon(board);
+           }
+           }
+        }
+                
     }
         
     private class serialListener implements ActionListener
